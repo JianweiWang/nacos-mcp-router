@@ -21,8 +21,7 @@ router_logger = NacosMcpRouteLogger.get_logger()
 mcp_servers_dict = {}
 mcp_updater: Optional[McpUpdater] = None
 nacos_http_client: Optional[NacosHttpClient] = None
-
-
+work_mode = os.getenv("MODE", "router")
 def search_mcp_server(task_description: str, key_words: str) -> str:
   """
     Name:
@@ -160,8 +159,7 @@ async def add_mcp_server(mcp_server_name: str) -> str:
     router_logger.warning("failed to install mcp server: " + mcp_server_name, exc_info=e)
     return "failed to install mcp server: " + mcp_server_name
 
-def main() -> int:
-  # init Nacos client and ChromDB
+def init_router() -> int:
   asyncio.run(init())
 
   app = Server("nacos_mcp_router")
@@ -333,6 +331,26 @@ def main() -> int:
     case _:
       router_logger.error("unknown transport type: " + transport_type)
       return 1
+
+def init_proxy() -> int:
+  router_logger.info("init proxy")
+  mcp_config = os.getenv("MCP_CONFIG", "")
+  if mcp_config == "":
+    router_logger.error("MCP_CONFIG is not set")
+    return 1
+  mcp_config = json.loads(mcp_config)
+  router_logger.info("mcp_config: " + str(mcp_config))
+  
+  return 0
+
+def main() -> int:
+  if work_mode == "router":
+    return init_router()
+  elif work_mode == "proxy":
+    return init_proxy()
+  else:
+    router_logger.error("unknown work mode: " + work_mode)
+    return 1
 
 
 async def init() -> None:
