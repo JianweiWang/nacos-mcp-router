@@ -116,7 +116,7 @@ proxy模式支持把sse、stdio协议MCP Server转换为streamableHTTP协议MCP 
 #### 使用
 proxy模式的使用与router类似，参数略有不同，建议使用docker部署。
 ```
-docker run -d --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=streamable_http -e PROXIED_MCP_NAME=$PROXIED_MCP_NAME -e   nacos-mcp-router:latest
+docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=streamable_http -e MODE=proxy -e PROXIED_MCP_NAME=$PROXIED_MCP_NAME  nacos-mcp-router:latest
 ```
 
 ### 开发

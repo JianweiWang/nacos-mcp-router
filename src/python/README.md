@@ -69,7 +69,7 @@ python -m nacos-mcp-router
 
 ##### Using Docker
 ```
-docker run -it --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=$TRANSPORT_TYPE nacos-mcp-router:latest
+docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=$TRANSPORT_TYPE nacos-mcp-router:latest
 ```
 
 ##### Usage with Cline、Cursor、Claude and other applications
@@ -120,9 +120,9 @@ Add this to MCP settings of your application:
 The proxy mode supports converting SSE and stdio protocol MCP Servers into streamable HTTP protocol MCP Servers.
 
 #### Usage
-The usage of proxy mode is similar to that of router mode, with slightly different parameters. Docker deployment is recommended.
+The usage of proxy mode is similar to that of router mode, with slightly different parameters，add environment variables: `MODE=proxy,PROXIED_MCP_NAME=$PROXIED_MCP_NAME`. Docker deployment is recommended.
 ```
-docker run -d --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=streamable_http -e PROXIED_MCP_NAME=$PROXIED_MCP_NAME -e   nacos-mcp-router:latest
+docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=streamable_http -e MODE=proxy -e PROXIED_MCP_NAME=$PROXIED_MCP_NAME  nacos-mcp-router:latest
 ```
 
 
